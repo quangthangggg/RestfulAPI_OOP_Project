@@ -96,4 +96,3 @@ public class SignUpTest extends APINeedTesting {
 		
 	}
 }
-
