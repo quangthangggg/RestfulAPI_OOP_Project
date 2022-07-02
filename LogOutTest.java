@@ -38,7 +38,7 @@ public class LogOutTest extends APINeedTesting{
 		//Unit 1
 		try {
 			String access_token = this.creRequest(
-					"damanh1211@gmail.com"							
+					"auto@gmail.com"							
 					,"123456"
 			);
 			this.callAPI(access_token);
