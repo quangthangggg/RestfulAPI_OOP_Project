@@ -31,7 +31,7 @@ public class LogInTest extends APINeedTesting{
 	}
 
 	void test1() {
-		System.out.println("Test 1 in SignIn API: The code and message strings shall be not NULL as well as non-empty:");
+		System.out.println("Test 1 in LogIn API: The code and message strings shall be not NULL as well as non-empty:");
 		
 		//Unit 1
 		try {
