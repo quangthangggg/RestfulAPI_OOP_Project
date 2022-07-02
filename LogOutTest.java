@@ -5,12 +5,21 @@ import org.json.JSONObject;
 import io.restassured.response.Response;
 import org.testng.Assert;
 
-public class LogOutTest extends LogInTest{
+public class LogOutTest extends APINeedTesting{
+	
 
-	public void callAPI(String request) {
-		super.callAPI(request);
-		JSONObject data = new JSONObject(super.dataResponse);
-		String access_token = data.get("access_token").toString();
+	public String creRequest(String... request) {
+		LogInTest login = new LogInTest();
+		String currentAccount = login.creRequest(request[0], request[1]);
+		login.callAPI(currentAccount);
+		JSONObject data = new JSONObject(login.dataResponse);
+		String access_token = data.getString("access_token").toString();
+		return access_token;
+	
+	}
+	
+	public void callAPI(String access_token) {
+		baseURI = BaseURL.BASEURI;
 		Response response = 
 				given()
 					.header("Authorization", "Bearer" + access_token)
@@ -28,11 +37,11 @@ public class LogOutTest extends LogInTest{
 		
 		//Unit 1
 		try {
-			String request = this.creRequest(
-					"damanh@gmail.com"							
+			String access_token = this.creRequest(
+					"damanh1211@gmail.com"							
 					,"123456"
 			);
-			this.callAPI(request);
+			this.callAPI(access_token);
 			Assert.assertEquals(this.codeResponse, 1000);
 			Assert.assertEquals(this.messageResponse, "OK");
 	        System.out.println("Unit 1: Passed");
