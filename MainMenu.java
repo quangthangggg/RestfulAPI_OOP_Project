@@ -4,11 +4,10 @@ package restautotest;
 public class MainMenu {
 
 	public static void main(String[] args) {
-			SignUpTest sn = new SignUpTest();
-			sn.test1();
+			LogInTest li = new LogInTest();
+			li.test1();
 			
-			LogInTest si = new LogInTest();
-			si.test1();
+			LogOutTest lo = new LogOutTest();
+			lo.test1();
 	}
 }
-
