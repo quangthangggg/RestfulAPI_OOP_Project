@@ -32,8 +32,7 @@ public class SignUpTest extends APINeedTesting {
 		this.messageResponse = rep.get("message").toString();
 		this.dataResponse = rep.get("data").toString();
 	}
-		
-//	@Test
+
 	void test1() {
 		System.out.println("Test 1: The code and message strings shall be not NULL as well as non-empty:");
 		
@@ -55,7 +54,7 @@ public class SignUpTest extends APINeedTesting {
 		}
 
 		
-//		//Unit 2
+		//Unit 2
 		try {
 			String request = this.creRequest("d111112@gmail.com"
 					, "123"
