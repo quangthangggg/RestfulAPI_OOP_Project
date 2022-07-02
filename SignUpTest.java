@@ -20,7 +20,7 @@ public class SignUpTest extends APINeedTesting {
 	}
 	
 	public void callAPI(String request) {
-		baseURI = "https://auctions-app-2.herokuapp.com/";
+		baseURI = BaseURL.BASEURI;
 		Response response = 
 				given()
 					.header("Content-Type", "application/json")
@@ -34,17 +34,19 @@ public class SignUpTest extends APINeedTesting {
 	}
 
 	void test1() {
-		System.out.println("Test 1: The code and message strings shall be not NULL as well as non-empty:");
+		System.out.println("Test 1 in SignUp API: The code and message strings shall be not NULL as well as non-empty:");
 		
 		//Unit 1
 		try {
-			String request = this.creRequest("12z@gmail.com"
+			String request = this.creRequest(
+					"12z@gmail.com"
 					, "123"
 					, "123"
 					, "Ha Noi"
 					, "Vanh"
 					, "1233456456"
-					, "");
+					, ""
+			);
 			this.callAPI(request);
 			Assert.assertNotNull(this.codeResponse);
 			Assert.assertNotNull(this.messageResponse);
@@ -56,13 +58,15 @@ public class SignUpTest extends APINeedTesting {
 		
 		//Unit 2
 		try {
-			String request = this.creRequest("d111112@gmail.com"
+			String request = this.creRequest(
+					"d111112@gmail.com"
 					, "123"
 					, "123"
 					, "Ha Noi"
 					, "Vanh"
 					, "1233456456"
-					, "");
+					, ""
+			);
 			this.callAPI(request);
 			Assert.assertNotNull(this.codeResponse);
 			Assert.assertNotNull(this.messageResponse);
@@ -73,13 +77,15 @@ public class SignUpTest extends APINeedTesting {
 		
 		//Unit 3
 		try {
-			String request = this.creRequest("d111119@gmail.com"
-									, "123"
-									, "123"
-									, "Ha Noi"
-									, "Vanh"
-									, "1233456456"
-									, "");
+			String request = this.creRequest(
+					"d111119@gmail.com"
+					, "123"
+					, "123"
+					, "Ha Noi"
+					, "Vanh"
+					, "1233456456"
+					, ""
+			);
 			this.callAPI(request);
 			Assert.assertNotNull(this.codeResponse);
 			Assert.assertNotNull(this.messageResponse);
