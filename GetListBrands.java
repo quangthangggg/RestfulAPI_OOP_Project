@@ -43,12 +43,6 @@ public class getListBrands extends APINeedTesting {
 		}
 
 	 }
-
-	@Override
-	public void callAPI(String request) {
-		// TODO Auto-generated method stub
-		
-	}
 		
 }
 
