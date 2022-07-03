@@ -11,7 +11,7 @@ import io.restassured.response.Response;
 
 public class GetNews extends APINeedTesting{
 	
-	public String creRequest(String... request) {
+	public String creRequest1(String... request) {
 		LogInTest login = new LogInTest();
 		String currentAccount = login.creRequest(request[0], request[1]);
 		login.callAPI(currentAccount);
@@ -20,6 +20,15 @@ public class GetNews extends APINeedTesting{
 		return access_token;
 	
 	}
+	
+	public String creRequest2(String... request) {
+		JSONObject req = new JSONObject();
+		req.put("index", request[0]);
+		req.put("count", request[1]);
+		return req.toString();
+	
+	}
+
 
 	public void callAPI(String access_token, String news) {
 		baseURI = BaseURL.BASEURI;
@@ -42,12 +51,11 @@ public class GetNews extends APINeedTesting{
 		
 		//Unit 1
 		try {			
-			String access_token = this.creRequest(
+			String access_token = this.creRequest1(
 					"auto@gmail.com"							
 					,"123456");
 
-			IndexCount news = new IndexCount();
-			String input_news = news.creRequest("1", "1");
+			String input_news = this.creRequest2("1", "1");
 			this.callAPI(access_token, input_news);
 			
 			Assert.assertEquals(this.codeResponse, 1000);
@@ -59,18 +67,18 @@ public class GetNews extends APINeedTesting{
 	 }
 	
 	void test2() {
-		System.out.println("Test 2 in GetNews API: Input is None, the code should be 1000 and message is OK");
+		System.out.println("Test 2 in GetNews API: Input is null, the code should be 1000 and message is OK");
 		
 		// Unit 2
 		try {
-			String access_token = this.creRequest(
+			String access_token = this.creRequest1(
 					"auto@gmail.com"							
 					,"123456");
 
-			IndexCount news = new IndexCount();
-			String input_news = news.creRequest("", "");
+			String input_news = this.creRequest2("", "");
 			this.callAPI(access_token, input_news);
 			
+			Assert.assertEquals(this.codeResponse, 1000);
 			Assert.assertEquals(this.messageResponse, "OK");
 			 System.out.println("Unit 2: Passed");
 		} catch (AssertionError e) {
@@ -83,12 +91,11 @@ public class GetNews extends APINeedTesting{
 		
 		// Unit 3
 		try {
-			String access_token = this.creRequest(
+			String access_token = this.creRequest1(
 					"auto@gmail.com"							
 					,"123456");
 			
-			IndexCount news = new IndexCount();
-			String input_news = news.creRequest("duong", "duong");
+			String input_news = this.creRequest2("duong", "duong");
 			this.callAPI(access_token, input_news);
 			System.out.println("Unit 3: Failed");
 		} catch (JSONException e) {
