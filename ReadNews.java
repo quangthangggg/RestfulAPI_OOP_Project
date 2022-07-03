@@ -46,6 +46,8 @@ public class ReadNews extends APINeedTesting{
 
 			String new_id = "1"; 
 			this.callAPI(access_token, new_id);
+			System.out.println(this.messageResponse);
+			System.out.println(this.dataResponse);
 			
 			Assert.assertEquals(this.codeResponse, 1000);
 			Assert.assertEquals(this.messageResponse, "OK");
