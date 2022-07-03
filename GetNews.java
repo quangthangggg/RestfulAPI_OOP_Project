@@ -10,12 +10,22 @@ import org.testng.Assert;
 import io.restassured.response.Response;
 
 public class GetNews extends APINeedTesting{
+	
+	public String creRequest(String... request) {
+		LogInTest login = new LogInTest();
+		String currentAccount = login.creRequest(request[0], request[1]);
+		login.callAPI(currentAccount);
+		JSONObject data = new JSONObject(login.dataResponse);
+		String access_token = data.getString("access_token").toString();
+		return access_token;
+	
+	}
 
-
-	public void callAPI(String news) {
+	public void callAPI(String access_token, String news) {
 		baseURI = BaseURL.BASEURI;
 		Response response = 
 				given()
+					.header("Authorization", "Bearer" + access_token)
 					.body(news)
 					.contentType("application/json")
 				.when()
@@ -31,10 +41,14 @@ public class GetNews extends APINeedTesting{
 		System.out.println("Test 1 in GetNews API: Input is numeric value, the code should be 1000 and message is OK:");
 		
 		//Unit 1
-		try {
+		try {			
+			String access_token = this.creRequest(
+					"auto@gmail.com"							
+					,"123456");
+
 			IndexCount news = new IndexCount();
 			String input_news = news.creRequest("1", "1");
-			this.callAPI(input_news);
+			this.callAPI(access_token, input_news);
 			
 			Assert.assertEquals(this.codeResponse, 1000);
 			Assert.assertEquals(this.messageResponse, "OK");
@@ -49,9 +63,13 @@ public class GetNews extends APINeedTesting{
 		
 		// Unit 2
 		try {
+			String access_token = this.creRequest(
+					"auto@gmail.com"							
+					,"123456");
+
 			IndexCount news = new IndexCount();
 			String input_news = news.creRequest("", "");
-			this.callAPI(input_news);
+			this.callAPI(access_token, input_news);
 			
 			Assert.assertEquals(this.messageResponse, "OK");
 			 System.out.println("Unit 2: Passed");
@@ -65,9 +83,13 @@ public class GetNews extends APINeedTesting{
 		
 		// Unit 3
 		try {
+			String access_token = this.creRequest(
+					"auto@gmail.com"							
+					,"123456");
+			
 			IndexCount news = new IndexCount();
 			String input_news = news.creRequest("duong", "duong");
-			this.callAPI(input_news);
+			this.callAPI(access_token, input_news);
 			System.out.println("Unit 3: Failed");
 		} catch (JSONException e) {
 			System.out.print("Unit 3: Passed");
