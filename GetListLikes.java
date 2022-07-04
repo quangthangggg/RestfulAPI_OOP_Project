@@ -9,22 +9,25 @@ import io.restassured.response.Response;
 import netscape.javascript.JSObject;
 
 public class GetListLikes extends APINeedTesting {
-
-	public String creRequest(String ... request) {
+	
+	public String creRequest1(String ... request) {
+		LogInTest login = new LogInTest();
+		String currentAccount = login.creRequest(request[0], request[1]);
+		login.callAPI(currentAccount);
+		JSONObject data = new JSONObject(login.dataResponse);
+		String access_token = data.getString("access_token").toString();
+		return access_token;
+	}
+	
+	public String creRequest2(String ... request) {
 		JSONObject req = new JSONObject();
 		req.put("index", request[0]);
 		req.put("count", request[1]);
 		return req.toString();
 	}
 	
-	public void callAPI(String currentEmail, String currentPassword, String request) {
+	public void callAPI(String access_token, String request) {
 		baseURI = BaseURL.BASEURI;
-		
-		LogInTest login = new LogInTest();
-		String currentAccount = login.creRequest(currentEmail, currentPassword);
-		login.callAPI(currentAccount);
-		JSONObject data = new JSONObject(login.dataResponse);
-		String access_token = data.getString("access_token").toString();
 		
 		Response response = 
 				given()
@@ -45,12 +48,13 @@ public class GetListLikes extends APINeedTesting {
 		
 		//Unit 1
 		try {
-			String request = this.creRequest("1", "1");
+			String access_token = this.creRequest1(
+					"auto@gmail.com"							
+					,"123456");
 			
-			String email = "auto@gmail.com";
-			String password = "123456";
+			String request = this.creRequest2("1", "1");
 			
-			this.callAPI(email, password, request);
+			this.callAPI(access_token, request);
 			
 			Assert.assertEquals(this.codeResponse, 1000);
 			Assert.assertEquals(this.messageResponse, "OK");
@@ -62,5 +66,26 @@ public class GetListLikes extends APINeedTesting {
 		} catch (JSONException j) {
 			System.out.println("Unit 1: Failed");
 		}	
+	}
+
+	void test2() {
+		System.out.println("Test 2 of GetListLikes API: return code should be 1004 since user haven't logged in");
+		
+		try {
+			String access_token = "";
+			
+			String request = this.creRequest2("1", "1");
+			
+			this.callAPI(access_token, request);
+			Assert.assertEquals(this.codeResponse, 1004);
+			System.out.println("Code: 1004");
+	        System.out.println("Unit 1: Passed");
+	        System.out.println(this.codeResponse);
+	        System.out.println(this.dataResponse);
+		} catch (AssertionError e) {
+			System.out.println("Unit 2: Failed");
+		} catch (JSONException j) {
+			System.out.println("Unit 2: Failed");
+		}
 	}
 }
