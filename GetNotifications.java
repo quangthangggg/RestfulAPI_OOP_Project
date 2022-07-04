@@ -81,7 +81,7 @@ public class GetNotifications extends APINeedTesting{
 			this.callAPI(access_token, input_notifications);			
 	        System.out.println("Unit 2: Failed");
 		} catch (JSONException e) {
-			System.out.println("Unit 2: Passed");
+			System.out.println("Unit 2: Passed, can not get input non-numeric value");
 		}
 	 }
 	
