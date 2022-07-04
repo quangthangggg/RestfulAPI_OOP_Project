@@ -76,3 +76,21 @@ public class TotalLikesOfAuction extends APINeedTesting {
 			System.out.println("Unit 2: Passed, input auction must be a numeric value");
 		}
 	}
+	
+	void test3() {
+		System.out.println("Test 3 of TotalLikesOfAuction API: input auctionID get null value");
+	
+		//Unit 3
+		try {
+			String access_token = this.creRequest(
+					"auto@gmail.com"
+					,"123456"
+					);
+			String auctionID = "";
+			this.callAPI(access_token, auctionID);
+			System.out.println("Unit 3: Failed");
+		} catch (JSONException e) {
+			System.out.println("Unit 3: Passed, input auctionID can't get null value");
+		}
+	}
+}
