@@ -4,6 +4,7 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import org.json.JSONObject;
 import org.testng.Assert;
+import org.json.JSONException;
 import io.restassured.response.Response;
 
 public class LikeAuction extends APINeedTesting {
@@ -55,6 +56,40 @@ public class LikeAuction extends APINeedTesting {
 			System.out.println("Unit 1: Passed");
 		} catch (AssertionError e) {
 			System.out.println("Unit 1: Failed");
+		}
+	}
+	
+	void test2() {
+		System.out.println("Test 2 of LikeAuction API: input auctionID get a non-numeric value");
+		
+		//Unit 2
+		try {
+			String access_token = this.creRequest(
+					"auto@gmail.com"
+					,"123456"
+					);
+			String auctionID = "abc";
+			this.callAPI(access_token, auctionID);
+			System.out.println("Unit 2: Failed");
+		} catch (JSONException e) {
+			System.out.println("Unit 2: Passed, input auction must be a numeric value");
+		}
+	}
+	
+	void test3() {
+		System.out.println("Test 3 of LikeAuction API: input auctionID get null value");
+	
+		//Unit 3
+		try {
+			String access_token = this.creRequest(
+					"auto@gmail.com"
+					,"123456"
+					);
+			String auctionID = "";
+			this.callAPI(access_token, auctionID);
+			System.out.println("Unit 2: Failed");
+		} catch (JSONException e) {
+			System.out.println("Unit 3: Passed, input auctionID can't get null value");
 		}
 	}
 }
