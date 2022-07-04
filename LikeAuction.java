@@ -87,7 +87,7 @@ public class LikeAuction extends APINeedTesting {
 					);
 			String auctionID = "";
 			this.callAPI(access_token, auctionID);
-			System.out.println("Unit 2: Failed");
+			System.out.println("Unit 3: Failed");
 		} catch (JSONException e) {
 			System.out.println("Unit 3: Passed, input auctionID can't get null value");
 		}
