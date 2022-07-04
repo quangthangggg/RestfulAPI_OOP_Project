@@ -70,7 +70,7 @@ public class ReadNews extends APINeedTesting{
 			this.callAPI(access_token, new_id);			
 			System.out.println("Unit 2: Failed");
 		} catch (JSONException e) {
-			System.out.println("Unit 2: Passed");
+			System.out.println("Unit 2: Passed, can not get input value except for 1 ");
 		}
 	 }
 }
