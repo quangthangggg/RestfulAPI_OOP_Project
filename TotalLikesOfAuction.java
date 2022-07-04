@@ -2,6 +2,8 @@ package restautotest;
 
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.testng.Assert;
 import io.restassured.response.Response;
@@ -33,10 +35,10 @@ public class TotalLikesOfAuction extends APINeedTesting {
 	}
 	
 	void test1() {
+		System.out.println("Test 1 of TotalLikesOfAuction API: return code should be 1000 and message should be OK");
 		
 		//Unit 1
 		try {
-			System.out.println("Test 1: return code should be 1000 and message should be OK");
 			
 			String access_token = this.creRequest(
 					"auto@gmail.com"
@@ -57,4 +59,20 @@ public class TotalLikesOfAuction extends APINeedTesting {
 			System.out.println("Unit 1: Failed");
 		}
 	}
-}
+	
+	void test2() {
+		System.out.println("Test 2 of TotalLikesOfAuction API: input auctionID get a non-numeric value");
+		
+		//Unit 2
+		try {
+			String access_token = this.creRequest(
+					"auto@gmail.com"
+					,"123456"
+					);
+			String auctionID = "abc";
+			this.callAPI(access_token, auctionID);
+			System.out.println("Unit 2: Failed");
+		} catch (JSONException e) {
+			System.out.println("Unit 2: Passed, input auction must be a numeric value");
+		}
+	}
